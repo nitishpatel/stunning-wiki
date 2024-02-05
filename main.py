@@ -34,6 +34,10 @@ class SearchQuery(BaseModel):
 @app.post("/wikipedia-count/")
 def fetch_wikipedia_summary(query: SearchQuery):
     """Endpoint to fetch Wikipedia summary and count the most common words."""
+    # Check if count is a positive integer
+    if query.count <= 0:
+        return {"error": "Count should be a positive integer"}
+
     # Wikipedia API URL for search
     search_url = f"https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch={query.title}&format=json"
     
